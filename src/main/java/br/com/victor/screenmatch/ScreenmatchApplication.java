@@ -1,7 +1,9 @@
 package br.com.victor.screenmatch;
 
+import br.com.victor.screenmatch.model.DadosSerie;
 import br.com.victor.screenmatch.requestApi.RequestApiKey;
 import br.com.victor.screenmatch.service.ConsumoApi;
+import br.com.victor.screenmatch.service.ConverterDados;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -25,5 +27,9 @@ public class ScreenmatchApplication implements CommandLineRunner, RequestApiKey 
 //		System.out.println(json);
 //		json = consumoApi.obterDados("https://coffee.alexflipnote.dev/random.json");
 		System.out.println(json);
+
+		ConverterDados conversor = new ConverterDados();
+		DadosSerie dados = conversor.obterDados(json, DadosSerie.class);
+		System.out.println(dados);
 	}
 }
