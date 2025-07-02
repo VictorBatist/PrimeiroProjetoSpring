@@ -1,5 +1,6 @@
 package br.com.victor.screenmatch.view;
 
+import br.com.victor.screenmatch.model.DadosEpisodio;
 import br.com.victor.screenmatch.model.DadosSerie;
 import br.com.victor.screenmatch.model.DadosTemporada;
 import br.com.victor.screenmatch.requestApi.RequestApiKey;
@@ -37,5 +38,14 @@ public class Principal implements RequestApiKey {
 			temporadas.add(dadosTemporada);
 		}
 		temporadas.forEach(System.out::println);
+
+//        for (int i = 0; i < dadosSerie.totalTemporadas(); i++) {
+//            List<DadosEpisodio> episodiosTemporada = temporadas.get(i).episodioList();
+//            for (int j = 0; j < episodiosTemporada.size(); j++) {
+//                System.out.println(episodiosTemporada.get(j).titulo());
+//            }
+//        }
+
+        temporadas.forEach(t -> t.episodioList().forEach(e -> System.out.println(e.titulo())));
     }
 }
