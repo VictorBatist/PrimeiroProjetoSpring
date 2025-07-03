@@ -9,6 +9,7 @@ import br.com.victor.screenmatch.service.ConverteDados;
 
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
@@ -23,21 +24,21 @@ public class Principal implements RequestApiKey {
     }
 
     public  void exibeMenu(){
-        System.out.println("Digite o nome de uma série para busca:");
-        var nomeSerie = scanner.nextLine();
-        var json = consumoApi.obterDados(ENDERECO + nomeSerie.replace(" ","+") + API_KEY);
-
-        DadosSerie dadosSerie = conversor.obterDados(json, DadosSerie.class);
-        System.out.println(dadosSerie);
-
-        		List<DadosTemporada> temporadas = new ArrayList<>();
-
-		for(int i = 1; i <= dadosSerie.totalTemporadas(); i++){
-			json =consumoApi.obterDados(ENDERECO + nomeSerie.replace(" ","+") + "&season=" + i + API_KEY);
-			DadosTemporada dadosTemporada = conversor.obterDados(json,DadosTemporada.class);
-			temporadas.add(dadosTemporada);
-		}
-		temporadas.forEach(System.out::println);
+//        System.out.println("Digite o nome de uma série para busca:");
+//        var nomeSerie = scanner.nextLine();
+//        var json = consumoApi.obterDados(ENDERECO + nomeSerie.replace(" ","+") + API_KEY);
+//
+//        DadosSerie dadosSerie = conversor.obterDados(json, DadosSerie.class);
+//        System.out.println(dadosSerie);
+//
+//        		List<DadosTemporada> temporadas = new ArrayList<>();
+//
+//		for(int i = 1; i <= dadosSerie.totalTemporadas(); i++){
+//			json =consumoApi.obterDados(ENDERECO + nomeSerie.replace(" ","+") + "&season=" + i + API_KEY);
+//			DadosTemporada dadosTemporada = conversor.obterDados(json,DadosTemporada.class);
+//			temporadas.add(dadosTemporada);
+//		}
+//		temporadas.forEach(System.out::println);
 
 //        for (int i = 0; i < dadosSerie.totalTemporadas(); i++) {
 //            List<DadosEpisodio> episodiosTemporada = temporadas.get(i).episodioList();
@@ -46,6 +47,15 @@ public class Principal implements RequestApiKey {
 //            }
 //        }
 
-        temporadas.forEach(t -> t.episodioList().forEach(e -> System.out.println(e.titulo())));
+//        temporadas.forEach(t -> t.episodioList().forEach(e -> System.out.println(e.titulo())));
+
+        List<String> nomes = Arrays.asList("Joao","Victoria", "Victor", "Neide", "Aghata", "Karine");
+
+        nomes.stream()
+                .sorted() // Ordena os nomes
+                //.limit(4) // limita aos 4 primeiros nomes
+                .filter(v-> v.startsWith("V")) // filtra todos os nomes começados com V
+                .map(v -> v.toUpperCase()) // Transforma os nomes em Caixa Alta
+                .forEach(System.out::println); // imprime os dados
     }
 }
