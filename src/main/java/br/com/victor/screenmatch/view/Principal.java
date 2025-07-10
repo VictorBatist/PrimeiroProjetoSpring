@@ -3,6 +3,7 @@ package br.com.victor.screenmatch.view;
 import br.com.victor.screenmatch.model.DadosEpisodio;
 import br.com.victor.screenmatch.model.DadosSerie;
 import br.com.victor.screenmatch.model.DadosTemporada;
+import br.com.victor.screenmatch.model.Episodio;
 import br.com.victor.screenmatch.requestApi.RequestApiKey;
 import br.com.victor.screenmatch.service.ConsumoApi;
 import br.com.victor.screenmatch.service.ConverteDados;
@@ -65,5 +66,12 @@ public class Principal implements RequestApiKey {
                 .sorted(Comparator.comparing(DadosEpisodio::avalicao).reversed())
                 .limit(5)
                 .forEach(System.out::println);
+
+        List<Episodio> episodios = temporadas.stream()
+                .flatMap(t -> t.episodioList().stream()
+                .map(d -> new Episodio(t.numero(), d))
+                ).collect(Collectors.toList());
+
+        episodios.forEach(System.out::println);
     }
 }
