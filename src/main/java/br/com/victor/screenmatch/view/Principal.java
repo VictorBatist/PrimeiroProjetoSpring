@@ -9,6 +9,8 @@ import br.com.victor.screenmatch.service.ConsumoApi;
 import br.com.victor.screenmatch.service.ConverteDados;
 
 import java.io.FileNotFoundException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -61,17 +63,39 @@ public class Principal implements RequestApiKey {
                 .flatMap(t-> t.episodioList().stream())
                 .collect(Collectors.toList());
 
+        System.out.println("\nTop 10 episódios");
         dadosEpisodios.stream()
                 .filter(e -> !e.avalicao().equalsIgnoreCase("N/A"))
+                .peek(e -> System.out.println("Primeiro filtro(N/A) " + e))
                 .sorted(Comparator.comparing(DadosEpisodio::avalicao).reversed())
-                .limit(5)
+                .peek(e -> System.out.println("Ordenação " + e))
+                .limit(10)
+                .peek(e -> System.out.println("Limite " + e))
+                .map(e -> e.titulo().toUpperCase())
+                .peek(e -> System.out.println("Mapeamento " + e))
                 .forEach(System.out::println);
 
-        List<Episodio> episodios = temporadas.stream()
-                .flatMap(t -> t.episodioList().stream()
-                .map(d -> new Episodio(t.numero(), d))
-                ).collect(Collectors.toList());
-
-        episodios.forEach(System.out::println);
+//        List<Episodio> episodios = temporadas.stream()
+//                .flatMap(t -> t.episodioList().stream()
+//                .map(d -> new Episodio(t.numero(), d))
+//                ).collect(Collectors.toList());
+//
+//        episodios.forEach(System.out::println);
+//
+//        System.out.println("Apartir de que ano você deseja ver os episodios :" );
+//
+//        var ano = scanner.nextInt();
+//        scanner.nextLine();
+//
+//        LocalDate dataBusca = LocalDate.of(ano, 1, 1);
+//
+//        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+//        episodios.stream()
+//                .filter(e -> e.getDataLancamento() != null && e.getDataLancamento().isAfter(dataBusca))
+//                .forEach( e -> System.out.println(
+//                        "\nTemporada: " + e.getTemporada() +
+//                        "\nEpisódio: " + e.getTitulo() +
+//                        " | Data lançamento: " + e.getDataLancamento().format(formatter)
+//                ));
     }
 }
