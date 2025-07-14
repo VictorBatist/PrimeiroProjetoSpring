@@ -112,5 +112,12 @@ public class Principal implements RequestApiKey {
 //                        "\nEpisódio: " + e.getTitulo() +
 //                        " | Data lançamento: " + e.getDataLancamento().format(formatter)
 //                ));
+
+        Map<Integer, Double> avalicaoPorTemporada = episodios.stream()
+                .filter(e -> e.getAvalicao() > 0.0)
+                .collect(Collectors.groupingBy(Episodio::getTemporada,
+                         Collectors.averagingDouble(Episodio::getAvalicao)));
+
+        System.out.println(avalicaoPorTemporada);
     }
 }
