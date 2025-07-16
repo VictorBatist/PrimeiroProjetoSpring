@@ -83,19 +83,19 @@ public class Principal implements RequestApiKey {
         System.out.println("Lista completa com todos os episodios:");
         episodios.forEach(System.out::println);
 
-        System.out.println("Digite o titulo do Episodio que deseja: ");
-        var trechoTitulo = scanner.nextLine();
-
-        Optional<Episodio> episodioBuscado = episodios.stream()
-                .filter(e -> e.getTitulo().toUpperCase().contains(trechoTitulo.toUpperCase()))
-                .findFirst();
-
-        if(episodioBuscado.isPresent()){
-            System.out.println("Episodio encontrado!");
-            System.out.println("Temporada: " + episodioBuscado.get().getTemporada());
-        }else {
-            System.out.println("Episodio não encontrado!");
-        }
+//        System.out.println("Digite o titulo do Episodio que deseja: ");
+//        var trechoTitulo = scanner.nextLine();
+//
+//        Optional<Episodio> episodioBuscado = episodios.stream()
+//                .filter(e -> e.getTitulo().toUpperCase().contains(trechoTitulo.toUpperCase()))
+//                .findFirst();
+//
+//        if(episodioBuscado.isPresent()){
+//            System.out.println("Episodio encontrado!");
+//            System.out.println("Temporada: " + episodioBuscado.get().getTemporada());
+//        }else {
+//            System.out.println("Episodio não encontrado!");
+//        }
 //
 //        System.out.println("Apartir de que ano você deseja ver os episodios :" );
 //
@@ -119,5 +119,15 @@ public class Principal implements RequestApiKey {
                          Collectors.averagingDouble(Episodio::getAvalicao)));
 
         System.out.println(avalicaoPorTemporada);
+
+        DoubleSummaryStatistics est = episodios.stream()
+                .filter(e -> e.getAvalicao() > 0.0)
+                .collect(Collectors.summarizingDouble(Episodio::getAvalicao));
+
+        System.out.println("Media: " + est.getAverage());
+        System.out.println("Melhor Episodio: " + est.getMax());
+        System.out.println("Pior Episodio: " + est.getMin());
+        System.out.println("Quantidade de avaliações: " + est.getCount());
+
     }
 }
