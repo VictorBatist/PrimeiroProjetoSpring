@@ -119,5 +119,15 @@ public class Principal implements RequestApiKey {
                          Collectors.averagingDouble(Episodio::getAvalicao)));
 
         System.out.println(avalicaoPorTemporada);
+
+        DoubleSummaryStatistics est = episodios.stream()
+                .filter(e -> e.getAvalicao() > 0.0)
+                .collect(Collectors.summarizingDouble(Episodio::getAvalicao));
+
+        System.out.println("Media: " + est.getAverage());
+        System.out.println("Melhor Episodio: " + est.getMax());
+        System.out.println("Pior Episodio: " + est.getMin());
+        System.out.println("Quantidade de avaliações: " + est.getCount());
+
     }
 }
